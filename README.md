@@ -2,6 +2,52 @@
 
 This is the final project in the Udacity Self-Driving Car Nanodegree. The project guides a real car to drive around the track, using Robot Operating System or ROS. The project implement core functionality of the autonomous vehicle system, including traffic light detection, control, and waypoint generation and following
 
+## Project setup
+
+The project was implemented using the below Architecture:
+
+Docker on AWS:  A g3.4xlarge instance on AWS was used and Docker was built using Dockerfile. 
+
+## Thanks to OVERTAKERS for explaining how to run Docker on GPU. Without this, the project had multiple issues as the docker ran on CPU instead of GPU
+
+## Docker Installation With Nvidia GPU
+
+Build the docker image
+```
+docker build --rm . -f GPU.dockerfile -t capstone-gpu
+```
+Run the docker container
+```
+docker run --runtime=nvidia --rm -it -p 4567:4567  -v "/$(pwd)":/capstone -v /tmp/log:/root/.ros/ capstone-gpu
+```
+
+Run in Simulator mode
+```
+source "/opt/ros/$ROS_DISTRO/setup.bash"
+catkin_make
+source devel/setup.bash
+roslaunch launch/styx.launch 
+```
+
+Run in test mode
+
+1. Download training bag that was recorded on the Udacity self-driving car.
+2. Unzip the file - unzip traffic_light_bag_file.zip
+3. Play the bag file - rosbag play -l traffic_light_bag_file/traffic_light_training.bag
+4. Launch your project in site mode - cd programming_real_self_driving_car/ros
+5. roslaunch launch/site.launch
+
+Confirm that traffic light detection works on real life images
+
+### Port forwarding
+Since AWS AMI Ubuntu version does not have any GUI, the simulator was run on laptop and hence port forwarding had to be used. This was achieved by introducing option -L 4567:localhost:4567 in the ssh command given by AWS
+
+### ADDITIONAL INSTALLATIONS
+Following additional installations were done:
+1. Additional requirements were installed using requirements.txt - pip install -r requirements.txt
+2. Pillow had to be updated as ROS launch was timing out - pip install Pillow
+3. Rosdep update 
+
 
 ## System Architecture Diagram
 The following is a system architecture diagram showing the ROS nodes and topics used in the project.
