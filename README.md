@@ -46,7 +46,8 @@ I could not join any team and hence did this project independently
 
 The project uses the UNet Architecture and network has been trained on images created via simulator. Loss function is based on dice coefficient. The entire implementation can be found in tl_detector.py. The model folder has the retrained models. The Traffic_light_bag_files was used for training purpose
 
-_________________________________________________________________________________________________
+```
+_______________________________________________________________________________________________
 Layer (type)                     Output Shape          Param #     Connected to
 ====================================================================================================
 input_1 (InputLayer)             (None, 96, 128, 1)    0
@@ -117,6 +118,8 @@ conv_9_2 (Conv2D)                (None, 96, 128, 32)   9248        conv_9_1[0][0
 ____________________________________________________________________________________________________
 conv2d_2 (Conv2D)                (None, 96, 128, 1)    33          conv_9_2[0][0]
 ====================================================================================================
+
+```
 
 ### Traffic light classifier
 The entire module is implemented in tl_classifier.py under light_classification subfolder. The images are classified into one of the predefined sets - Red, Yellow, Green and None. The accuracy on simulator images was 98% , but accuracy on real images were only 84%. Two different classifier models were used for this purpose and the models along with the weights can be found at the models folder under tl_detector
