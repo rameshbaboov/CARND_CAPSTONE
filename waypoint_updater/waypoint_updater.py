@@ -35,9 +35,9 @@ class WaypointUpdater(object):
         sub2 = rospy.Subscriber('/current_pose', PoseStamped, self.pose_cb)
         sub3 = rospy.Subscriber('/traffic_waypoint',TLStatus,self.traffic_cb)      
         sub4 = rospy.Subscriber('/current_velocity',TwistStamped,self.velocity_cb)
-        rospy.loginfo('all modules subscirbed')
+        #rospy.loginfo('all modules subscirbed')
 	self.final_waypoints = rospy.Publisher('final_waypoints', Lane, queue_size=1)
-	rospy.loginfo("waypoint publishig initialized")
+	#rospy.loginfo("waypoint publishig initialized")
         # TODO: Add other member variables you need below
         # Waypoints
         self.pose = None
@@ -52,25 +52,25 @@ class WaypointUpdater(object):
         # other variables
         self.current_vel = 0.0
         self.sim_testing = bool(rospy.get_param("~sim_testing", True))
-        rospy.loginfo("all variables initiaized")
+        #rospy.loginfo("all variables initiaized")
         self.loop()
 
     def loop(self):
         rate = rospy.Rate(PUBLISHING_RATE)
         while not rospy.is_shutdown():
         # do not start the loop unless all call back functions run and have the required data 
-            rospy.loginfo("loop start")
+            #rospy.loginfo("loop start")
  	    ros_start_time = rospy.get_time()
             if self.pose and self.base_waypoints and self.waypoints_tree and self.waypoints_2d:
                 closest_waypoints_idx = self.get_closest_waypoint_idx()
-                rospy.loginfo("Closest waypoint index is %s",closest_waypoints_idx)
+                #rospy.loginfo("Closest waypoint index is %s",closest_waypoints_idx)
 		self.publish_waypoints(closest_waypoints_idx)
 	    else:
-		rospy.loginfo("some of the variables are not set by call back function")
+		#rospy.loginfo("some of the variables are not set by call back function")
             ros_end_time = rospy.get_time()
-            rospy.loginfo("ros start time is %s",ros_start_time)
-            rospy.loginfo("ros end time is %s",ros_end_time)
-            rospy.loginfo("ros duratio is %s",ros_end_time - ros_start_time)
+            #rospy.loginfo("ros start time is %s",ros_start_time)
+            #rospy.loginfo("ros end time is %s",ros_end_time)
+            #rospy.loginfo("ros duratio is %s",ros_end_time - ros_start_time)
             rate.sleep()
 ################################################################################################
 #                               CALL BACK FUNCTIONS
@@ -79,7 +79,7 @@ class WaypointUpdater(object):
     def pose_cb(self, msg):
         # TODO: Implement
         self.pose = msg
-	rospy.loginfo('self.pose received and is  %s ', self.pose.pose.position.x)
+	#rospy.loginfo('self.pose received and is  %s ', self.pose.pose.position.x)
         pass
 
     def waypoints_cb(self, waypoints):
