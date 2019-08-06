@@ -6,7 +6,7 @@ This is the final project in the Udacity Self-Driving Car Nanodegree. The projec
 
 The project was implemented using the below Architecture:
 
-Docker on AWS:  A g3.4xlarge instance on AWS was used and Docker was built using Dockerfile. 
+Docker on AWS:  A g3.4xlarge instance on AWS was used and Docker was built using Dockerfile. AMI ID - Deep Learning AMI (Amazon Linux) Version 22.0 (ami-01ac4e28da63bac3c)
 
 ## Thanks to OVERTAKERS for explaining how to run Docker on GPU. Without this, the project had multiple issues as the docker ran on CPU instead of GPU
 
@@ -19,6 +19,16 @@ docker build --rm . -f GPU.dockerfile -t capstone-gpu
 Run the docker container
 ```
 docker run --runtime=nvidia --rm -it -p 4567:4567  -v "/$(pwd)":/capstone -v /tmp/log:/root/.ros/ capstone-gpu
+```
+To log into same container using different session. This is required to check Topics and messages, play rosbag etc
+
+List the container id
+```
+docker ps 
+```
+login to the container from other session
+```
+docker exec -it <container id> bash
 ```
 
 Run in Simulator mode
@@ -41,6 +51,8 @@ Confirm that traffic light detection works on real life images
 
 ### Port forwarding
 Since AWS AMI Ubuntu version does not have any GUI, the simulator was run on laptop and hence port forwarding had to be used. This was achieved by introducing option -L 4567:localhost:4567 in the ssh command given by AWS
+
+ssh -i "xyz.pem" -L 4567:localhost:4567 ec2-user@ec2-18-234-233-113.compute-1.amazonaws.com
 
 ### ADDITIONAL INSTALLATIONS
 Following additional installations were done:
